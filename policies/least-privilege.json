@@ -1,0 +1,63 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowReadOnlyS3OwnTeamBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${team-bucket}",
+        "arn:aws:s3:::${team-bucket}/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Team": "${aws:PrincipalTag/Team}",
+          "aws:ResourceTag/Environment": "${aws:PrincipalTag/Environment}"
+        }
+      }
+    },
+    {
+      "Sid": "AllowEC2ReadOnly",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:Describe*",
+        "ec2:Get*"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Environment": "${aws:PrincipalTag/Environment}"
+        }
+      }
+    },
+    {
+      "Sid": "AllowCloudWatchLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:GetLogEvents",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyWithoutMFA",
+      "Effect": "Deny",
+      "Action": [
+        "s3:DeleteObject",
+        "s3:PutObject",
+        "ec2:TerminateInstances",
+        "iam:*"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "BoolIfExists": {
+          "aws:MultiFactorAuthPresent": "false"
+        }
+      }
+    }
+  ]
+}

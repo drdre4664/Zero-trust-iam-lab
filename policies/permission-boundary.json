@@ -1,0 +1,58 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowCoreServices",
+      "Effect": "Allow",
+      "Action": [
+        "s3:*",
+        "ec2:*",
+        "logs:*",
+        "cloudwatch:*",
+        "lambda:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyIAMEscalation",
+      "Effect": "Deny",
+      "Action": [
+        "iam:CreateUser",
+        "iam:DeleteUser",
+        "iam:AttachUserPolicy",
+        "iam:DetachUserPolicy",
+        "iam:PutUserPolicy",
+        "iam:CreateAccessKey",
+        "iam:UpdateAccessKey",
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:PutRolePolicy",
+        "iam:PassRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyOrganizationActions",
+      "Effect": "Deny",
+      "Action": [
+        "organizations:*",
+        "account:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenySecurityServiceModification",
+      "Effect": "Deny",
+      "Action": [
+        "cloudtrail:DeleteTrail",
+        "cloudtrail:StopLogging",
+        "config:DeleteConfigRule",
+        "guardduty:DeleteDetector",
+        "securityhub:DisableSecurityHub"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

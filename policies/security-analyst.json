@@ -1,0 +1,62 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowSecurityReadOnly",
+      "Effect": "Allow",
+      "Action": [
+        "cloudtrail:GetTrail",
+        "cloudtrail:GetTrailStatus",
+        "cloudtrail:DescribeTrails",
+        "cloudtrail:LookupEvents",
+        "cloudwatch:GetMetricData",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:GetMetricStatistics",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "guardduty:GetFindings",
+        "guardduty:ListFindings",
+        "guardduty:GetDetector",
+        "securityhub:GetFindings",
+        "securityhub:ListFindings",
+        "iam:GenerateCredentialReport",
+        "iam:GetCredentialReport",
+        "iam:ListUsers",
+        "iam:ListRoles",
+        "iam:ListPolicies",
+        "iam:GetUser",
+        "iam:GetRole",
+        "iam:ListAttachedUserPolicies",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListMFADevices",
+        "iam:ListAccessKeys",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeNetworkAcls",
+        "ec2:DescribeVpcs",
+        "config:GetComplianceDetailsByRule",
+        "config:DescribeConfigRules",
+        "s3:GetBucketPolicy",
+        "s3:GetBucketAcl",
+        "s3:GetBucketLogging",
+        "s3:GetBucketVersioning",
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyDataAccess",
+      "Effect": "Deny",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "rds:*",
+        "dynamodb:*",
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
